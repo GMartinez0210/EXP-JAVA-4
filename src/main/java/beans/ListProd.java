@@ -2,33 +2,31 @@ package beans;
 
 import java.io.InputStream;
 
-import com.mysql.cj.jdbc.Blob;
-
-public class Producto {
+public class ListProd {
 	private int id_prod;
-	private int id_categ;
+	private String categoria;
 	private String nombre;
 	private double precio;
 	private int stock;
-	private InputStream image;
+	private InputStream imagen;
 	
-	public Producto() {
+	public ListProd() {
 
 	}
 
-	public Producto(int id_prod, int id_categ, String nombre, double precio, int stock, InputStream image) {
+	public ListProd(int id_prod, String categoria, String nombre, double precio, int stock, InputStream imagen) {
 		this.id_prod = id_prod;
-		this.id_categ = id_categ;
+		this.categoria = categoria;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.stock = stock;
-		this.image = image;
+		this.imagen = imagen;
 	}
 
 	@Override
 	public String toString() {
-		return "Producto [id_prod=" + id_prod + ", id_categ=" + id_categ + ", nombre=" + nombre + ", precio=" + precio
-				+ ", stock=" + stock + ", image=" + image + "]";
+		return "ListProd [id_prod=" + id_prod + ", categoria=" + categoria + ", nombre=" + nombre + ", precio=" + precio
+				+ ", stock=" + stock + ", imagen=" + imagen + "]";
 	}
 
 	public int getId_prod() {
@@ -39,12 +37,12 @@ public class Producto {
 		this.id_prod = id_prod;
 	}
 
-	public int getId_categ() {
-		return id_categ;
+	public String getCategoria() {
+		return categoria;
 	}
 
-	public void setId_categ(int id_categ) {
-		this.id_categ = id_categ;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public String getNombre() {
@@ -71,12 +69,12 @@ public class Producto {
 		this.stock = stock;
 	}
 
-	public InputStream getImage() {
-		return image;
+	public InputStream getImagen() {
+		return imagen;
 	}
 
-	public void setImage(InputStream image) {
-		this.image = image;
+	public void setImagen(InputStream imagen) {
+		this.imagen = imagen;
 	}
-
+		
 }

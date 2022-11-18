@@ -1,9 +1,17 @@
 package dao;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
+
+import beans.ListProd;
 import beans.Producto;
 import interfaces.Producto_Interface_DAO;
 import utils.MySQLConexion;
@@ -25,7 +33,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 			pst.setString(3, p.getNombre());
 			pst.setDouble(4, p.getPrecio());
 			pst.setInt(5, p.getStock());
-			pst.setBinaryStream(6, p.getImage());
+			pst.setBlob(6, p.getImage());
 
 			rs = pst.executeUpdate();
 
@@ -51,7 +59,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 			pst.setString(2, p.getNombre());
 			pst.setDouble(3, p.getPrecio());
 			pst.setInt(4, p.getStock());
-			pst.setBinaryStream(5, p.getImage());
+			pst.setBlob(5, p.getImage());
 			pst.setInt(6, p.getId_prod());
 
 			rs = pst.executeUpdate();
@@ -117,6 +125,79 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 			MySQLConexion.closeConexion(con);
 		}
 		return p;
+	}
+
+	@Override
+	public ArrayList<ListProd> listado() {
+		ArrayList<ListProd> listado = new ArrayList<ListProd>();
+		
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try {
+			con = MySQLConexion.getConexion();
+			String sql = "call proc_listarProd()";
+			pst = con.prepareStatement(sql);
+
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				ListProd p = new ListProd();
+				p.setId_prod(rs.getInt(1));
+				p.setNombre(rs.getString(2));
+				p.setPrecio(rs.getDouble(3));
+				p.setStock(rs.getInt(4));
+				p.setCategoria(rs.getString(5));
+				p.setImagen(rs.getBinaryStream(6));
+				listado.add(p);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error en listado: " + e.getMessage());
+		} finally {
+			MySQLConexion.closeConexion(con);
+		}
+		return listado;
+	}
+
+	@Override
+	public void listarImg(int id, HttpServletResponse response) {
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		BufferedInputStream bufferedInputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
+		
+		
+		try {
+			outputStream = response.getOutputStream();
+			con = MySQLConexion.getConexion();
+			String sql = "call proc_listimg(?)";
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			
+			response.setContentType("image/*");
+			
+			if(rs.next()) {
+				inputStream = rs.getBinaryStream("image");
+			}
+			bufferedInputStream = new BufferedInputStream(inputStream);
+			bufferedOutputStream = new BufferedOutputStream(outputStream);
+			int i = 0;
+			while ((i = bufferedInputStream.read()) != -1) {
+				bufferedOutputStream.write(i);
+			}
+		} catch (Exception e) {
+			System.out.println("Error en listado de imagen: " + e.getMessage());
+		} finally {
+			MySQLConexion.closeConexion(con);
+		}
+		
 	}
 
 }

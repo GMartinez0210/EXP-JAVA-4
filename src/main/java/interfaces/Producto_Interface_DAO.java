@@ -1,5 +1,10 @@
 package interfaces;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletResponse;
+
+import beans.ListProd;
 import beans.Producto;
 
 public interface Producto_Interface_DAO {
@@ -10,6 +15,10 @@ public interface Producto_Interface_DAO {
 	public int eliminar(Producto p);
 	
 	public Producto buscar(String codigo);
+	
+	public ArrayList<ListProd> listado();
+	
+	public void listarImg(int id, HttpServletResponse response);
 	
 	
 }
