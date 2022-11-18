@@ -1,19 +1,10 @@
 @charset "ISO-8859-1";
-a{
-    text-decoration: none;
-    margin-bottom: 15px;
-}
-footer{
+.footer-container {
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    justify-content: space-between;
     align-items: center;
     font-family: 'Poppins', sans-serif;;
-}
-#footer-main{
-    display: flex;
-    justify-content: space-around;
-    width: 70%;
+    flex-wrap: wrap;
 }
 .logo{
     font-weight: 600;
@@ -23,53 +14,39 @@ footer{
     width: 20px;
     margin-left: 5px;
 }
-.footer-left{
-    display: block;
-    width: 40%;
+.footer-subcontainer{
+    width: clamp(250px, 60%, 600px)
 }
 .footer-left-sm{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-size: 1.5rem
 }
 .footer-left-location{
     display: inline-flex;
     flex-direction: row;
     text-align: center;
-    margin: 7px;
 }
-.img-location{
-    height: 15px;
-    width: auto;
-}
-.footer-right{
-    display: block;
-    width: 50%;
-    justify-content: center;
-    text-align: center;
+.bi-location{
+    font-size: 1rem;
 }
 .footer-right-h2{
     text-align: center;
+    font-weight: 700;
 }
 .footer-right-email{
-    text-align: center;
-    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 #correo{
     width: 50%;
     border-radius: 3px ;
     height: 22px;
     border: 1px solid black;
-}
-#btn-unete{
-    width: 70px;
-    border-radius: 3px ;
-    height: 21px;
-    border: 1px solid black;
-}
-#btn-unete:hover{
-    background-color: lightgray;
 }
 .footer-right-columns{
     display: flex;
@@ -92,9 +69,6 @@ footer{
     width: 100%;
     text-align: center;
     margin-top: 20px;
-}
-p{
-    margin: 0px;
 }
 .footer-left-p{
     margin:7px;
