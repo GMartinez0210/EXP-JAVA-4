@@ -11,7 +11,7 @@ public class MySQLConexion {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/exp_java_4?useSSL=false&useTimezone=true&serverTimezone=UTC";
 			String usr = "root";
-			String psw = "root"; //admin
+			String psw = "admin"; //admin
 			con = DriverManager.getConnection(url, usr, psw);
 		} 
 		catch (ClassNotFoundException e) {
