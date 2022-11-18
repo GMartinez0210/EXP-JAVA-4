@@ -1,16 +1,24 @@
-<style>
 .slider-container {
 	overflow-x: scroll;
 	scroll-snap-type: x mandatory;
 }
 
-.slider-subcontainer {
+.slider-container::-webkit-scrollbar {
+	width: 0;
+	padding: 0;
+}
+
+@media (min-width: 768px) {
+	.slider-container::-webkit-scrollbar {
+		width: unset;
+		padding: unset;
+	}
+}
+
+.slider-container .slider-subcontainer {
 	list-style: none;
 	display: flex;
 	gap: 1.5rem;	
-	
-	margin: 0;
-	padding: 0 1.5rem;
 }
 
 .sliderItem-li {
@@ -56,17 +64,3 @@
 	
 	color: #CF2929;
 }
-</style>
-
-<div class="slider-container">
-	<ul class="slider-subcontainer">
-		<% for(int i = 0; i < 10; i++) { %>
-			<jsp:include page="./sliderItem.jsp">
-				<jsp:param value="IGURE" name="sliderItem-category"/>
-				<jsp:param value="GREEN MUSCLE FIT POLO SHIRT" name="sliderItem-title"/>
-				<jsp:param value="229.00" name="sliderItem-priceCrossed"/>
-				<jsp:param value="129.00" name="sliderItem-price"/>
-			</jsp:include>
-		<% } %>
-	</ul>
-</div>
