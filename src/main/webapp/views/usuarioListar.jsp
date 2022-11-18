@@ -44,7 +44,7 @@
 			
 		</section>
 		<section class="col col-12 col-md-8">
-			<a href="Usuario?tipo?listar" class="btn btn-md btn-primary mb-5">Agregar Usuario</a>
+			<a href="Usuario?tipo=listar" class="btn btn-md btn-primary mb-5">Agregar Usuario</a>
 			<jsp:include page="../components/tablaUsuario.jsp" />
 		</section>
 	</div>
@@ -52,5 +52,3 @@
 
 <jsp:include page="../components/footer.jsp" />
 <jsp:include page="./partials/foot.jsp" />
-
-<script src="../js/usuarioListar.js" type="module"></script>
