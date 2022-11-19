@@ -1,8 +1,6 @@
 package dao;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
@@ -12,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import beans.CarritoDTO;
-import beans.DetalleCarrito_DTO;
 import beans.Usuario_DTO;
 import interfaces.Carrito_DAO;
 import utils.MySQLConexion;
@@ -59,10 +56,11 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		BufferedInputStream bufferedInputStream = null;
 		BufferedOutputStream bufferedOutputStream = null;
 		try {
-			String sql = "SELECT * FROM producto where id = 1;";
 			outputStream = response.getOutputStream();
 			con = MySQLConexion.getConexion();
+			String sql = "SELECT * FROM producto where id = ?;";
 			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, id);
 			rs = pstm.executeQuery();
 			response.setContentType("image/*");
 			if(rs.next()) {
@@ -72,7 +70,7 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 			bufferedOutputStream = new BufferedOutputStream(outputStream);
 			int i  = 0;
 			while((i = bufferedInputStream.read()) != 1) {
-				System.out.println(i);
+				System.out.println("Método Listar Imagen" + "\n" + i);
 				bufferedOutputStream.write(i);
 			}
 		}catch(Exception e) {
@@ -81,7 +79,7 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 	}
 
 	@Override
-	public int AgregarACarrito(Usuario_DTO usuario_DTO) {
+	public int AgregarACarrito(int idUsu, int cantidad) {
 		int det = -1;
 		Connection con = null;
 		PreparedStatement pstm1 = null;
@@ -91,9 +89,9 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 			con.setAutoCommit(false);
 			String sql1 = "call exp_java_4.BuscarCarrito(?);";
 			pstm1 = con.prepareStatement(sql1);
-			pstm1.setInt(1, usuario_DTO.getId());
+			pstm1.setInt(1, idUsu);
 			
-			//String sql2 = 
+			String sql2 = "";
 			
 		}
 		catch(Exception e) {

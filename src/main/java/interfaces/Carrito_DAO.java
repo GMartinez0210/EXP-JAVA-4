@@ -8,5 +8,5 @@ import beans.Usuario_DTO;
 public interface Carrito_DAO {
 	public List<CarritoDTO> listarCarritoXCod(int id);
 	public void listarImg(int id, HttpServletResponse response);
-	public int AgregarACarrito(Usuario_DTO usuario_DTO);
+	public int AgregarACarrito(int idUsu, int cantidad);
 }

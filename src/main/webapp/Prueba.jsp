@@ -7,8 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="ServletCarrito?tipo=listarxCod" id="frmbuscarcod" method="post" class="row g-4">
+	<form action="ServletCarrito?tipo=listarxCod" method="post">
 		<button class="btn btn-info">Mostrar Lista</button>
+	</form>
+	<form action="ServletCarrito?tipo=AgregarACarritoXCod"method="post">
+		<button class="btn btn-info">Agregar a Carrito</button>
 	</form>
 </body>
 </html>

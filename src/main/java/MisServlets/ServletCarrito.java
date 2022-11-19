@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import dao.MySQL_CarritoDAO;
 import services.CarritoService;
 
@@ -47,15 +49,28 @@ public class ServletCarrito extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String xtipo = request.getParameter("tipo");
-		System.out.println(xtipo);
 		if (xtipo.equals("listarxCod")) {
 			listarxCod(request, response);
 		}
+		//Código para agregar a carrito 
+		else if (xtipo.equalsIgnoreCase("AgregarACarritoXCod")) {
+			agregarACarritoXCod(request, response);
+		}
+	}
+
+	private void agregarACarritoXCod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+		int cantidad, idProd;
+		System.out.println("Revisar si el front-end tiene el parámetro de cantidad y que el parámetro id de Producto sea 'idProd'");
+		cantidad = Integer.parseInt(request.getParameter("cantidad"));
+		idProd = Integer.parseInt(request.getParameter("idProd"));
+		
+		HttpSession sesion = request.getSession(true);
+		System.out.println(cantidad + " " + idProd);
 	}
 
 	private void listarxCod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("NO OLVIDAR CORREGIR EL SERVLETCARRITO (listarxCod)");
-		request.setAttribute("data", serviceCarrito.listaCarritoXCod(1));		
+		request.setAttribute("data", serviceCarrito.listaCarritoXCod(Integer.parseInt(request.getParameter("idUsu"))));
 		request.getRequestDispatcher("cart.jsp").forward(request, response);
 	}
 }
