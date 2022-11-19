@@ -1,4 +1,4 @@
-<footer>
+<footer class="my-5">
 	<div class="container footer-container">
 		<div class="footer-subcontainer">
 			<h2 class="logo">GEALLU</h2>

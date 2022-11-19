@@ -1,4 +1,4 @@
-package MisServlets;
+package servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.DetalleCarrito_DTO;
+import dao.DAO_Factory;
 import dao.MySQL_CarritoDAO;
 import services.CarritoService;
 
@@ -34,9 +36,6 @@ public class ServletCarrito extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		int id = 1;
-		System.out.println(id);
-		mysqlCarritoDAO.listarImg(id, null);
 	}
 
 	/**
@@ -49,24 +48,45 @@ public class ServletCarrito extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String xtipo = request.getParameter("tipo");
-		if (xtipo.equals("listarxCod")) {
+		if (xtipo.equalsIgnoreCase("listarxCod")) {
 			listarxCod(request, response);
+			return;
 		}
+		
 		//Código para agregar a carrito 
-		else if (xtipo.equalsIgnoreCase("AgregarACarritoXCod")) {
+		
+		if (xtipo.equalsIgnoreCase("AgregarACarritoXCod")) {
 			agregarACarritoXCod(request, response);
+			return;
 		}
 	}
 
 	private void agregarACarritoXCod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-		int cantidad, idProd;
+		int cantidad, idProducto, idUsuario, idCarrito;
 		System.out.println("Revisar si el front-end tiene el parámetro de cantidad y que el parámetro id de Producto sea 'idProd'");
 		cantidad = Integer.parseInt(request.getParameter("cantidad"));
-		idProd = Integer.parseInt(request.getParameter("idProd"));
+		idProducto = Integer.parseInt(request.getParameter("idProd"));
+		idUsuario = Integer.parseInt(request.getParameter("idUsu"));
 		
-		HttpSession sesion = request.getSession(true);
-		System.out.println(cantidad + " " + idProd);
+		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
+		fabrica.getCarrito().BuscarCarrito(idUsuario);
+		System.out.println("EN SERVLET: " + cantidad + " " + idProducto + " " + idUsuario + " ");
+		
+
+		idCarrito = (mysqlCarritoDAO.BuscarIDCarrito(idUsuario));
+		DetalleCarrito_DTO dc = new DetalleCarrito_DTO();
+		dc.setIdCarrito(idCarrito);
+		dc.setIdProducto(idProducto);
+		dc.setCantidad(cantidad);
+		try {
+			fabrica.getCarrito().AgregarACarrito(dc, idUsuario, idProducto, cantidad);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR AL AGREGAR A CARRITO" + e.getMessage());
+		}
+		
+		request.setAttribute("data", serviceCarrito.listaCarritoXCod(Integer.parseInt(request.getParameter("idUsu"))));
+		request.getRequestDispatcher("cart.jsp").forward(request, response);
 	}
 
 	private void listarxCod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

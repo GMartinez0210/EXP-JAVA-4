@@ -1,7 +1,6 @@
 <%@ page import="beans.Categoria_Tipo_DTO" %>
 <%@ page import="interfaces.Categoria_Tipo_DAO" %>
 <%@ page import="dao.DAO_Factory" %>
-
 <style>
 	.nav-brand-logo {
 		font-size: 1.75rem;
@@ -19,7 +18,7 @@
 	}
 </style>
 
-<nav class="navbar navbar-expand-lg bg-white">
+<nav class="navbar navbar-expand-lg bg-white mb-5">
   <div class="container">
     <a class="navbar-brand nav-brand-logo" href="#">GEALLU Store</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

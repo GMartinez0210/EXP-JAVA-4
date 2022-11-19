@@ -3,7 +3,7 @@ package beans;
 import java.io.InputStream;
 
 public class CarritoDTO {
-	private int id, idUsu, cantProd;
+	private int id, idUsu, idProd, cantProd;
 	private String NomUsu, marcaProd, nomProd; 
 	private double precioProd, totalProd;
 	private InputStream img;
@@ -11,11 +11,12 @@ public class CarritoDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CarritoDTO(int id, int idUsu, int cantProd, String nomUsu, String marcaProd, String nomProd,
+	public CarritoDTO(int id, int idUsu, int idProd, int cantProd, String nomUsu, String marcaProd, String nomProd,
 			double precioProd, double totalProd, InputStream img) {
 		super();
 		this.id = id;
 		this.idUsu = idUsu;
+		this.idProd = idProd;
 		this.cantProd = cantProd;
 		NomUsu = nomUsu;
 		this.marcaProd = marcaProd;
@@ -77,5 +78,13 @@ public class CarritoDTO {
 	}
 	public final void setImg(InputStream img) {
 		this.img = img;
+	}
+	
+	public final int getIdProd() {
+		return idProd;
+	}
+	
+	public final void setIdProd(int idProd) {
+		this.idProd = idProd;
 	}
 }

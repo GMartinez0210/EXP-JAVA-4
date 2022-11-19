@@ -3,6 +3,8 @@ package services;
 import java.util.List;
 
 import beans.CarritoDTO;
+import beans.DetalleCarrito_DTO;
+import beans.Usuario_DTO;
 import dao.DAO_Factory;
 import interfaces.Carrito_DAO;
 import utils.Constantes;
@@ -10,10 +12,12 @@ import utils.Constantes;
 public class CarritoService {
 
 	DAO_Factory fabrica = DAO_Factory.getDAO_Factory(Constantes.ORIGEN_DE_DATOS_MYSQL);
-	Carrito_DAO objCarrito = fabrica.getCarrito();
+	Carrito_DAO Carrito = fabrica.getCarrito();
 	
-	public List<CarritoDTO> listaCarritoXCod(int codUsu){
-		System.out.println("Llegó al Service");
-		return objCarrito.listarCarritoXCod(codUsu);
+	public List<CarritoDTO> listaCarritoXCod(int idUsu){
+		return Carrito.listarCarritoXCod(idUsu);
+	}
+	public int agregar(DetalleCarrito_DTO detalleCarrito_DTO, int idUsu, int idProd, int cantidad) {
+		return Carrito.AgregarACarrito(detalleCarrito_DTO, idUsu, idProd, cantidad);
 	}
 }

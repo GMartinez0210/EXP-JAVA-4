@@ -12,6 +12,7 @@ import utils.MySQLConexion;
 
 public class MySQL_CategoriaProducto_DAO implements Categoria_Tipo_DAO {
 
+	@Override
 	public ArrayList<Categoria_Tipo_DTO> listar() {
 		ArrayList<Categoria_Tipo_DTO> categorias = new ArrayList<Categoria_Tipo_DTO>();
 		

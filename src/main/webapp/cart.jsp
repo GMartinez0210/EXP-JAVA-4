@@ -43,8 +43,7 @@
 	
 	.cart-item-img {
 		transition: transform .5s;
-		width: 100%;
-		height: auto;
+		height: 100%;
 		border-radius: 10px;
 		width: clamp(150px, 100%, 400px);
 	}
@@ -89,7 +88,7 @@
 			for (CarritoDTO xCart : lista) {
 				out.println("<div class='cart-item-container'>");
 				out.println("<div class='cart-item-imgcontainer'>");
-				out.println("<img class='cart-item-img' src='ServletCarritoIMG?id="+ xCart.getId() +"' alt=''>");
+				out.println("<img class='cart-item-img' src='listarImg?id="+ xCart.getIdProd() +"' alt=''>");
 				out.println("</div>");
 				out.println("<div class='cart-item-detail'>");
 				out.println("<div>");
