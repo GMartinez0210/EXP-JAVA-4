@@ -23,90 +23,96 @@ import dao.DAO_Factory;
 @WebServlet(name = "CrudProducto", urlPatterns = { "/CrudProducto" })
 public class CrudProductoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CrudProductoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public CrudProductoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("Entró al Servlet: CrudProducto");
-		
-		String accion = request.getParameter("btnAccion");
+
+		String accion = request.getParameter("accion");
 		System.out.println("Accion:" + accion);
-		
-		switch (accion) {
-		case "reg":
+
+		if (accion.equals("reg")) {
 			registrar(request, response);
-
-			break;
-		case "act":
-			actualizar(request, response);
-			break;
-
-		case "eli":
-			eliminar(request, response);
-			break;
-			
-		case "lis":
-			listar(request, response);
-			break;
-			
-		case "editar":
-			buscar(request, response);
-			break;
-
-		default:
-			break;
+			return;
 		}
+
+		if (accion.equals("act")) {
+			actualizar(request, response);
+			return;
+		}
+
+		if (accion.equals("eli")) {
+			eliminar(request, response);
+			return;
+		}
+
+		if (accion.equals("lis")) {
+			listar(request, response);
+			return;
+		}
+
+		if (accion.equals("editar")) {
+			buscar(request, response);
+			return;
+		}
+
 	}
 
 	private void buscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cod = request.getParameter("codigo");
-		
+		int id = Integer.parseInt(request.getParameter("id"));
+
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
-		Producto p = fabrica.getProductoInterface().buscar(cod);
-		
+		Producto p = fabrica.getProductoInterface().buscar(id);
+
 		request.setAttribute("p", p);
-		request.getRequestDispatcher("crudProducto.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("views/productoListar.jsp").forward(request, response);
+
 	}
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
-		ArrayList<ListProd> listado = fabrica.getProductoInterface().listado();
-		
-		request.setAttribute("lstProducto", listado);
-		request.getRequestDispatcher("crudProducto.jsp").forward(request, response);
-		
+//		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
+//		ArrayList<ListProd> listado = fabrica.getProductoInterface().listado();
+
+//		request.setAttribute("lstProducto", listado);
+		request.getRequestDispatcher("views/productoListar.jsp").forward(request, response);
+
 	}
 
-	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cod = Integer.parseInt(request.getParameter("txtCodigo"));
-		
-		Producto p = new Producto();
-		p.setId_prod(cod);
-		
+	private void eliminar(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+
+//		Producto p = new Producto();
+//		p.setId_prod(cod);
+
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
-		int ok = fabrica.getProductoInterface().eliminar(p);
-		
-		if (ok == 0) {
-			request.setAttribute("mensaje", "<div class='alert alert-danger'role='alert'>"
-					+ "Error al eliminar producto " + p.getId_prod() + "! </div>");
-		} else {
-			request.setAttribute("mensaje", "<div class='alert alert-success'role='alert'>" + "Producto "
-					+ p.getId_prod() + " Eliminado! </div>");
-		}
-		request.getRequestDispatcher("crudProducto.jsp").forward(request, response);
+		int ok = fabrica.getProductoInterface().eliminar(id);
+
+		boolean error = ok == -1;
+
+		String mensaje = !error 
+				? "Se elimino el producto con éxito" 
+				: "Hubo un error al eliminar el producto";
+
+		request.setAttribute("error", error);
+		request.setAttribute("mensaje", mensaje);
+		request.getRequestDispatcher("views/productoListar.jsp").forward(request, response);
 	}
 
-	private void actualizar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void actualizar(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		int cod = Integer.parseInt(request.getParameter("txtCodigo"));
 		String nombre = request.getParameter("txtNombre");
 		double pre = Double.parseDouble(request.getParameter("txtPrecio"));
@@ -114,7 +120,7 @@ public class CrudProductoServlet extends HttpServlet {
 		int cat = Integer.parseInt(request.getParameter("cboCategoria"));
 		Part img = request.getPart("txtImg");
 		InputStream inputstream = img.getInputStream();
-		
+
 		Producto p = new Producto();
 		p.setId_prod(cod);
 		p.setNombre(nombre);
@@ -122,51 +128,54 @@ public class CrudProductoServlet extends HttpServlet {
 		p.setStock(stock);
 		p.setId_categ(cat);
 		p.setImage(inputstream);
-		
+
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
 		int ok = fabrica.getProductoInterface().actualizar(p);
+
+		boolean error = ok == -1;
+
+		String mensaje = !error 
+				? "Se actualizo el producto con éxito" 
+				: "Hubo un error al actualizar el producto";
+
+		request.setAttribute("error", error);
+		request.setAttribute("mensaje", mensaje);
 		
-		if (ok == 0) {
-			request.setAttribute("mensaje", "<div class='alert alert-danger'role='alert'>"
-					+ "Error al actualizar producto" + p.getId_prod() + "! </div>");
-		} else {
-			request.setAttribute("mensaje", "<div class='alert alert-success'role='alert'>" + "Producto "
-					+ p.getNombre() + " Actualizado! </div>");
-		}
-		request.getRequestDispatcher("crudProducto.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("views/productoListar.jsp").forward(request, response);
+
 	}
 
-	private void registrar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		int cod = Integer.parseInt(request.getParameter("txtCodigo"));
+	private void registrar(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+//		int cod = Integer.parseInt(request.getParameter("txtCodigo"));
 		String nombre = request.getParameter("txtNombre");
 		double pre = Double.parseDouble(request.getParameter("txtPrecio"));
 		int stock = Integer.parseInt(request.getParameter("txtStock"));
 		int cat = Integer.parseInt(request.getParameter("cboCategoria"));
 		Part img = request.getPart("txtImg");
 		InputStream inputstream = img.getInputStream();
-		
+
 		Producto p = new Producto();
-		p.setId_prod(cod);
+//		p.setId_prod(cod);
 		p.setNombre(nombre);
 		p.setPrecio(pre);
 		p.setStock(stock);
 		p.setId_categ(cat);
 		p.setImage(inputstream);
-		
+
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
 		int ok = fabrica.getProductoInterface().registrar(p);
-		
-		if (ok == 0) {
-			request.setAttribute("mensaje", "<div class='alert alert-danger'role='alert'>"
-					+ "Error al registrar producto" + p.getId_prod() + "! </div>");
-		} else {
-			request.setAttribute("mensaje", "<div class='alert alert-success'role='alert'>" + "Producto "
-					+ p.getNombre() + " Registrado! </div>");
-		}
-		request.getRequestDispatcher("crudProducto.jsp").forward(request, response);
-		
+
+		boolean error = ok == -1;
+
+		String mensaje = !error 
+				? "Se agregó el producto con éxito" 
+				: "Hubo un error al agregar el producto";
+
+		request.setAttribute("error", error);
+		request.setAttribute("mensaje", mensaje);
+		request.getRequestDispatcher("views/productoListar.jsp").forward(request, response);
+
 	}
-	
 
 }

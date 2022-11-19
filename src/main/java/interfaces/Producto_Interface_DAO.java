@@ -12,9 +12,9 @@ public interface Producto_Interface_DAO {
 	
 	public int actualizar(Producto p);
 	
-	public int eliminar(Producto p);
+	public int eliminar(int id);
 	
-	public Producto buscar(String codigo);
+	public Producto buscar(int codigo);
 	
 	public ArrayList<ListProd> listado();
 	

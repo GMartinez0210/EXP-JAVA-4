@@ -26,14 +26,14 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 
 		try {
 			con = MySQLConexion.getConexion();
-			String sql = "INSERT INTO producto VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO producto VALUES (null, ?, ?, ?, ?, ?)";
 			pst = con.prepareStatement(sql);
-			pst.setInt(1, p.getId_prod());
-			pst.setInt(2, p.getId_categ());
-			pst.setString(3, p.getNombre());
-			pst.setDouble(4, p.getPrecio());
-			pst.setInt(5, p.getStock());
-			pst.setBlob(6, p.getImage());
+//			pst.setInt(1, p.getId_prod());
+			pst.setInt(1, p.getId_categ());
+			pst.setString(2, p.getNombre());
+			pst.setDouble(3, p.getPrecio());
+			pst.setInt(4, p.getStock());
+			pst.setBlob(5, p.getImage());
 
 			rs = pst.executeUpdate();
 
@@ -53,7 +53,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 
 		try {
 			con = MySQLConexion.getConexion();
-			String sql = "UPDATE producto idCategoria = ?, nombre = ?, precio = ?, stock = ?, image = ? WHERE id = ?";
+			String sql = "UPDATE producto SET idCategoria = ?, nombre = ?, precio = ?, stock = ?, image = ? WHERE id = ?";
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, p.getId_categ());
 			pst.setString(2, p.getNombre());
@@ -73,7 +73,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 	}
 
 	@Override
-	public int eliminar(Producto p) {
+	public int eliminar(int id) {
 		int rs = 0;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -82,7 +82,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 			con = MySQLConexion.getConexion();
 			String sql = "DELETE FROM producto WHERE id =?";
 			pst = con.prepareStatement(sql);
-			pst.setInt(1, p.getId_prod());
+			pst.setInt(1, id);
 			rs = pst.executeUpdate();
 			
 		} catch (Exception e) {
@@ -94,7 +94,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 	}
 
 	@Override
-	public Producto buscar(String codigo) {
+	public Producto buscar(int codigo) {
 		Producto p = null;
 
 		Connection con = null;
@@ -105,7 +105,7 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 			con = MySQLConexion.getConexion();
 			String sql = "SELECT * FROM producto WHERE id = ?";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, codigo);
+			pst.setInt(1, codigo);
 			rs = pst.executeQuery();
 			
 			while (rs.next()) {
