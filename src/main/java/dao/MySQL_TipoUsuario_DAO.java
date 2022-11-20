@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import beans.Categoria_Tipo_DTO;
 import interfaces.Categoria_Tipo_DAO;
+
 import utils.MySQLConexion;
 
 public class MySQL_TipoUsuario_DAO implements Categoria_Tipo_DAO {

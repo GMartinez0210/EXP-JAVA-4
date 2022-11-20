@@ -1,3 +1,5 @@
+<%@ page import="beans.Usuario_DTO" %>
+
 <li id="<%= request.getParameter("idProducto") %>" class="sliderItem-li mt-3 mb-5">
 	<figure class="sliderItem">
 		<div>
@@ -13,7 +15,8 @@
 		</figcaption>
 	</figure>
 	<div>
-		<a href="Carrito?id=<%= request.getParameter("idProducto") %>" class="mx-3 d-block btn btn-md btn-info text-white">
+		<a href="${pageContext.request.contextPath}/ServletCarrito?tipo=AgregarACarritoXCod&&cantidad=1&&idProd=<%= request.getParameter("idProducto") %>&&idUsu=<%= session.getAttribute("idUsuario") %>" 
+			class="mx-3 d-block btn btn-md btn-info text-white">
 			<i class="bi bi-cart"></i>
 			<span>Añadir</span>
 		</a>

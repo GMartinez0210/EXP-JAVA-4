@@ -17,7 +17,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/formLogin.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/nav.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/section.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/acordeon_detalleCompra.css">	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/acordeon_detalleCompra.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 	<title>GEALLU Store</title>
 </head>

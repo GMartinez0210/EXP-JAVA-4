@@ -1,10 +1,6 @@
 package services;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletResponse;
-
-import beans.Producto;
 import dao.DAO_Factory;
 import interfaces.Producto_Interface_DAO;
 

@@ -1,5 +1,5 @@
 package dao;
-
+import interfaces.Carrito_DAO;
 import interfaces.Categoria_Tipo_DAO;
 import interfaces.Producto_Interface_DAO;
 import interfaces.Usuario_DAO;
@@ -17,6 +17,12 @@ public class MySQL_DAO_Factory extends DAO_Factory {
 		return new MySQL_CategoriaProducto_DAO();
 	}
 
+	/* C */
+	@Override
+	public Carrito_DAO getCarrito() {
+		return new MySQL_CarritoDAO();
+	}
+	
 	@Override
 	public Producto_Interface_DAO getProductoInterface() {
 		// TODO Auto-generated method stub

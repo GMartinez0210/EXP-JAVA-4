@@ -6,18 +6,6 @@
 <jsp:include page="./partials/head.jsp" />
 <jsp:include page="../components/nav.jsp" />
 
-<<<<<<< HEAD
-=======
-
-
-<jsp:include page="../components/detalleCompra.jsp" />
-
-<jsp:include page="../components/footer.jsp" />
-
-
-<%@ include file="./partials/foot.jsp" %>
-
->>>>>>> 69f47d155024eb2e133fdff98fbc1254577970f0
 <main class="container">
 	<section>
 		<% DAO_Factory factory = DAO_Factory.getDAO_Factory(1); %>
@@ -33,7 +21,4 @@
 
 <jsp:include page="../components/footer.jsp" />
 <jsp:include page="./partials/foot.jsp" />
-<<<<<<< HEAD
-=======
 
->>>>>>> 69f47d155024eb2e133fdff98fbc1254577970f0

@@ -1,6 +1,7 @@
 package beans;
 
 public class Usuario_DTO {
+
 	// Variables
 	private int id, idTipo;
 	private String tipo, email, clave, dni, nombre, apellidos;

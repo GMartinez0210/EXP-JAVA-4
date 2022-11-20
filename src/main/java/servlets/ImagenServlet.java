@@ -37,6 +37,7 @@ public class ImagenServlet extends HttpServlet {
 		
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
 		int id = Integer.parseInt(request.getParameter("id"));
+				
 		fabrica.getProductoInterface().listarImg(id, response);
 //		imagenService.buscar(id, response);
 	}

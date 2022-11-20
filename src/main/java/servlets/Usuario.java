@@ -94,6 +94,7 @@ public class Usuario extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		session.setAttribute("usuario", usuario);
+		session.setAttribute("idUsuario", usuario.getId());
 		
 		if(usuario.getIdTipo() != 1) {
 			res.sendRedirect("views/home.jsp");

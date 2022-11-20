@@ -1,6 +1,22 @@
 <%@ page import="beans.Categoria_Tipo_DTO" %>
 <%@ page import="interfaces.Categoria_Tipo_DAO" %>
 <%@ page import="dao.DAO_Factory" %>
+<style>
+	.nav-brand-logo {
+		font-size: 1.75rem;
+		font-weight: 700;
+	}
+	.nav-link-text {
+		font-size: 1.25rem;
+		font-weight: 400;
+		color: #000;
+	}
+	.nav-link-icon {
+		font-size: 1rem;
+		font-weight: 400;
+		color: #000;
+	}
+</style>
 
 <nav class="navbar navbar-expand-lg bg-white mb-5">
   <div class="container">
@@ -25,13 +41,17 @@
       </ul>
       <ul class="navbar-nav">
       	<li class="nav-item p-3">
-      		<i class="bi bi-search nav-link-icon"></i>
+      		<a href="${pageContext.request.contextPath}/views/home.jsp">
+      			<i class="bi bi-search nav-link-icon"></i>
+      		</a>
       	</li>
       	<li class="nav-item p-3">
       		<i class="bi bi-heart nav-link-icon"></i>
       	</li>
       	<li class="nav-item p-3">
-      		<i class="bi bi-cart nav-link-icon"></i>
+      		<a href="${pageContext.request.contextPath}/ServletCarrito?tipo=listarxCod&&idUsu=<%= session.getAttribute("idUsuario") %>">
+      			<i class="bi bi-cart nav-link-icon"></i>
+      		</a>
       	</li>
       	<li class="nav-item p-3">
       		<a href="${pageContext.request.contextPath}/views/usuarioLogin.jsp" class="nav-link btn btn-outline-dark btn-ingresar">
