@@ -4,7 +4,6 @@ import java.util.List;
 
 import beans.CarritoDTO;
 import beans.DetalleCarrito_DTO;
-import beans.Usuario_DTO;
 import dao.DAO_Factory;
 import interfaces.Carrito_DAO;
 import utils.Constantes;
@@ -19,5 +18,11 @@ public class CarritoService {
 	}
 	public int agregar(DetalleCarrito_DTO detalleCarrito_DTO, int idUsu, int idProd, int cantidad) {
 		return Carrito.AgregarACarrito(detalleCarrito_DTO, idUsu, idProd, cantidad);
+	}
+	public int eliminarItem(int idCarrito, int idProd, int idUsu){
+		return Carrito.eliminarItem(idCarrito, idProd, idUsu);
+	}
+	public int actualizaItem(int idCarrito, int idProd, int idUsu, int cantidad) {
+		return Carrito.actualizarItem(idCarrito, idProd, idUsu, cantidad);
 	}
 }

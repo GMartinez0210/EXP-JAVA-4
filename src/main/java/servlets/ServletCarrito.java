@@ -52,12 +52,40 @@ public class ServletCarrito extends HttpServlet {
 			return;
 		}
 		
-		//Código para agregar a carrito 
-		
+		//Agregar a carrito 
 		if (xtipo.equalsIgnoreCase("AgregarACarritoXCod")) {
 			agregarACarritoXCod(request, response);
 			return;
 		}
+		
+		//Eliminar de Carrito
+		if (xtipo.equalsIgnoreCase("EliminarItem")) {
+			eliminarItem(request, response);
+			return;
+		}
+		
+		//Actualizar Item
+		if (xtipo.equalsIgnoreCase("ActualizarItem")) {
+			actualizarItem(request, response);
+			return;
+		}
+	}
+
+	private void actualizarItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idUsu = Integer.parseInt(request.getParameter("idUsu"));
+		int idCarrito = (mysqlCarritoDAO.BuscarIDCarrito(idUsu));
+		int idProd = Integer.parseInt(request.getParameter("idProd"));
+		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+		serviceCarrito.actualizaItem(idCarrito, idProd, idUsu, cantidad);
+		listarxCod(request, response);
+	}
+
+	private void eliminarItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idUsu = Integer.parseInt(request.getParameter("idUsu"));
+		int idCarrito = (mysqlCarritoDAO.BuscarIDCarrito(idUsu));
+		int idProd = Integer.parseInt(request.getParameter("idProd"));
+		serviceCarrito.eliminarItem(idCarrito, idProd, idUsu);
+		listarxCod(request, response);
 	}
 
 	private void agregarACarritoXCod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,9 +97,7 @@ public class ServletCarrito extends HttpServlet {
 		
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);
 		fabrica.getCarrito().BuscarCarrito(idUsuario);
-		System.out.println("EN SERVLET: " + cantidad + " " + idProducto + " " + idUsuario + " ");
 		
-
 		idCarrito = (mysqlCarritoDAO.BuscarIDCarrito(idUsuario));
 		DetalleCarrito_DTO dc = new DetalleCarrito_DTO();
 		dc.setIdCarrito(idCarrito);
