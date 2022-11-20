@@ -1,9 +1,8 @@
 package dao;
 
 import interfaces.Categoria_Tipo_DAO;
-
-import interfaces.Usuario_DAO;
 import interfaces.Producto_Interface_DAO;
+import interfaces.Usuario_DAO;
 
 public abstract class DAO_Factory {
 	public static final int MYSQL = 1;
