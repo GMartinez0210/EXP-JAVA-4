@@ -62,19 +62,34 @@ public class ServletCarrito extends HttpServlet {
 			return;
 		}
 		
-		if (xtipo.equalsIgnoreCase("ActualizarItem")) {
-			actualizarItem(request, response);
+		if (xtipo.equalsIgnoreCase("SumarItem")) {
+			sumarItem(request, response);
+			return;
+		}
+		
+		if (xtipo.equalsIgnoreCase("RestarItem")) {
+			restarItem(request, response);
 			return;
 		}
 	}
 
-	private void actualizarItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	private void restarItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idUsu = Integer.parseInt(request.getParameter("idUsu"));
 		int idCarrito = (mysqlCarritoDAO.BuscarIDCarrito(idUsu));
 		int idProd = Integer.parseInt(request.getParameter("idProd"));
 		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
-		serviceCarrito.actualizaItem(idCarrito, idProd, idUsu, cantidad);
-		
+		serviceCarrito.restarItem(idCarrito, idProd, idUsu, cantidad);
+
+		response.sendRedirect("ServletCarrito?tipo=listarxCod&&idUsu="+idUsu);
+	}
+
+	private void sumarItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idUsu = Integer.parseInt(request.getParameter("idUsu"));
+		int idCarrito = (mysqlCarritoDAO.BuscarIDCarrito(idUsu));
+		int idProd = Integer.parseInt(request.getParameter("idProd"));
+		serviceCarrito.sumarItem(idCarrito, idProd, idUsu);
+
 		response.sendRedirect("ServletCarrito?tipo=listarxCod&&idUsu="+idUsu);
 	}
 
@@ -88,7 +103,6 @@ public class ServletCarrito extends HttpServlet {
 
 	private void agregarACarritoXCod(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cantidad, idProducto, idUsuario, idCarrito;
-		System.out.println("Revisar si el front-end tiene el parámetro de cantidad y que el parámetro id de Producto sea 'idProd'");
 		cantidad = Integer.parseInt(request.getParameter("cantidad"));
 		idProducto = Integer.parseInt(request.getParameter("idProd"));
 		idUsuario = Integer.parseInt(request.getParameter("idUsu"));

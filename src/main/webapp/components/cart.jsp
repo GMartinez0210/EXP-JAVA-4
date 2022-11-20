@@ -21,11 +21,11 @@
 					<div class='cart-item-price'>
 						<p>Cantidad:</p>
 						<div class='cart-item-detail-price'>
-							<a href="#" class="btn btn-sm btn-secondary">
+							<a href="ServletCarrito?tipo=RestarItem&idUsu=<%= session.getAttribute("idUsuario") %>&idProd=<%= xCart.getIdProd() %>&cantidad=<%= xCart.getCantProd() %>" class="btn btn-sm btn-secondary">
 								<i class="bi bi-dash"></i>
 							</a>
 							<p><%= xCart.getCantProd() %></p>
-							<a href="#" class="btn btn-sm btn-secondary">
+							<a href="ServletCarrito?tipo=SumarItem&idUsu=<%= session.getAttribute("idUsuario") %>&idProd=<%= xCart.getIdProd() %>" class="btn btn-sm btn-secondary">
 								<i class="bi bi-plus"></i>
 							</a>
 						</div>

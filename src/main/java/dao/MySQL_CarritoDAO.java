@@ -41,6 +41,14 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(pstm != null ) pstm.close();
+				if(cn != null) cn.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
 		}
 		return data;
 	}
@@ -60,6 +68,14 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(pstm != null ) pstm.close();
+				if(con != null) con.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
 		}
 		return resultado;
 	}
@@ -68,7 +84,6 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		int add = 0;
 		int idCarrito = BuscarIDCarrito(idUsu);
 		int confirmacion = buscarItem(idCarrito, idProd);
-		System.out.println(confirmacion);
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		PreparedStatement pstm2 = null;
@@ -89,7 +104,6 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		}
 		else {
 			try {
-				System.out.println("Llegó a segundo Try");
 				con = MySQLConexion.getConexion();
 				String sql2 = "call exp_java_4.SumarACarrito(?, ?, ?)";
 				pstm2 = con.prepareStatement(sql2);
@@ -101,6 +115,15 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 			}
 			catch(Exception e) {
 				System.out.println(e.getMessage());
+			}finally {
+				try {
+					if(pstm1 != null ) pstm1.close();
+					if(pstm2 != null ) pstm2.close();
+					if(con != null) con.close();
+				} 
+				catch (SQLException e2) {
+					System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+				}
 			}
 		}
 		return add;
@@ -144,6 +167,15 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 			}catch (Exception e1) {
 				System.out.println("Error al restaurar la Base de Datos" + e1.getMessage());
 			}
+		}finally {
+			try {
+				if(pstm1 != null ) pstm1.close();
+				if(pstm2 != null ) pstm2.close();
+				if(con != null) con.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
 		}
 	}
 
@@ -162,6 +194,14 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(pstm != null ) pstm.close();
+				if(con != null) con.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
 		}
 		return resultado;
 	}
@@ -204,27 +244,14 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
-		}
-		return status;
-	}
-	
-	@Override
-	public int actualizarItem(int idCarrito, int idProd, int idUsu, int cantidad) {
-		int status = -1;
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = MySQLConexion.getConexion();
-			String sql = "call exp_java_4.ActualizarItem(?, ?, ?);";
-			pstm = con.prepareStatement(sql);
-			pstm.setInt(1, idCarrito);
-			pstm.setInt(2, idProd);
-			pstm.setInt(3, cantidad);
-			status = pstm.executeUpdate();
-			agregarTotal(idUsu);
-		}
-		catch(Exception e) {
-			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(pstm != null ) pstm.close();
+				if(con != null) con.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
 		}
 		return status;
 	}
@@ -267,6 +294,67 @@ public class MySQL_CarritoDAO implements Carrito_DAO{
 		}
 		
 		return total_Subtotal_Descuento;
+	}
+
+	@Override
+	public int sumarItem(int idCarrito, int idProd, int idUsu) {
+		int status = -1;
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = MySQLConexion.getConexion();
+			String sql = "call exp_java_4.SumarItem(?, ?)";
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, idCarrito);
+			pstm.setInt(2, idProd);
+			status = pstm.executeUpdate();
+			agregarTotal(idUsu);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(pstm != null ) pstm.close();
+				if(con != null) con.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
+		}
+		return status;
+	}
+
+	@Override
+	public int restarItem(int idCarrito, int idProd, int idUsu, int cantidad) {
+		int status = -1;
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = MySQLConexion.getConexion();
+			if(cantidad > 1) {
+				String sql = "call exp_java_4.RestarItem(?, ?)";
+				pstm = con.prepareStatement(sql);
+				pstm.setInt(1, idCarrito);
+				pstm.setInt(2, idProd);
+				status = pstm.executeUpdate();
+				agregarTotal(idUsu);
+			}
+			else {
+				eliminarItem(idCarrito, idProd, idUsu);
+			}
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(pstm != null ) pstm.close();
+				if(con != null) con.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
+		}
+		return status;
 	}
 	
 	

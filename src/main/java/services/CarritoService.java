@@ -22,11 +22,13 @@ public class CarritoService {
 	public int eliminarItem(int idCarrito, int idProd, int idUsu){
 		return Carrito.eliminarItem(idCarrito, idProd, idUsu);
 	}
-	public int actualizaItem(int idCarrito, int idProd, int idUsu, int cantidad) {
-		return Carrito.actualizarItem(idCarrito, idProd, idUsu, cantidad);
-	}
-	
 	public double[] total_Subtotal_Descuento(int id) {
 		return Carrito.total_Subtotal_Descuento(id);
+	}
+	public int sumarItem(int idCarrito, int idProd, int idUsu) {
+		return Carrito.sumarItem(idCarrito, idProd, idUsu);
+	}
+	public int restarItem(int idCarrito, int idProd, int idUsu, int cantidad) {
+		return Carrito.restarItem(idCarrito, idProd, idUsu, cantidad);
 	}
 }

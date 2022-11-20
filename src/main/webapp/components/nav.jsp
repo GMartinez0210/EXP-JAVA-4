@@ -27,7 +27,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link nav-link-text active" aria-current="page" href="#">Home</a>
+          <a class="nav-link nav-link-text active" aria-current="page" href="${pageContext.request.contextPath}/views/home.jsp">Home</a>
         </li>
         <% DAO_Factory factory = DAO_Factory.getDAO_Factory(1); %>
         <% Categoria_Tipo_DAO categoriaProductos = factory.getCategoriaProducto(); %>
