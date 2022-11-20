@@ -1,3 +1,7 @@
+<%@ page import="beans.ListProd" %>
+<%@ page import="dao.DAO_Factory" %>
+<%@ page import="java.util.ArrayList" %>
+
 <style>
 .slider-container {
 	overflow-x: scroll;
@@ -19,12 +23,18 @@
 	max-width: 500px;
 }
 
+.sliderItem-container {
+	text-decoration: none;
+}
+
 .sliderItem {
 	width: 100%
 }
 
 .sliderItem-img {
 	width: 100%;
+	aspect-ratio: 1;
+	object-fit: contain;
 }
 
 .sliderItem-category {
@@ -58,14 +68,18 @@
 }
 </style>
 
-<div class="slider-container">
+<div class="slider-container mb-5">
 	<ul class="slider-subcontainer">
-		<% for(int i = 0; i < 10; i++) { %>
+		<% DAO_Factory factory = DAO_Factory.getDAO_Factory(1); %>
+		<% int idCategoria = Integer.parseInt(request.getParameter("idCategoria")); %>
+		<% ArrayList<ListProd> productos = factory.getProductoInterface().listarCategoria(idCategoria); %>
+		<% for(ListProd producto : productos) { %>
 			<jsp:include page="./sliderItem.jsp">
-				<jsp:param value="IGURE" name="sliderItem-category"/>
-				<jsp:param value="GREEN MUSCLE FIT POLO SHIRT" name="sliderItem-title"/>
-				<jsp:param value="229.00" name="sliderItem-priceCrossed"/>
-				<jsp:param value="129.00" name="sliderItem-price"/>
+				<jsp:param value="<%= producto.getId_prod() %>" name="idProducto"/>
+				<jsp:param value="<%= producto.getCategoria() %>" name="sliderItem-category"/>
+				<jsp:param value="<%= producto.getNombre() %>" name="sliderItem-title"/>
+				<jsp:param value="<%= producto.getPrecio() + 100 %>" name="sliderItem-priceCrossed"/>
+				<jsp:param value="<%= producto.getPrecio() %>" name="sliderItem-price"/>
 			</jsp:include>
 		<% } %>
 	</ul>

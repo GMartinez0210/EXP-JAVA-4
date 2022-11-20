@@ -36,37 +36,49 @@ public class CrudProductoServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Entró al Servlet: CrudProducto");
-		
-		String accion = request.getParameter("btnAccion");
-		System.out.println("Accion:" + accion);
-		
-		switch (accion) {
-		case "reg":
+		String accion = request.getParameter("accion");
+
+		if (accion.equals("reg")) {
 			registrar(request, response);
+			return;
+		}
 
-			break;
-		case "act":
+		if (accion.equals("act")) {
 			actualizar(request, response);
-			break;
+			return;
+		}
 
-		case "eli":
+		if (accion.equals("eli")) {
 			eliminar(request, response);
-			break;
-			
-		case "lis":
-			listar(request, response);
-			break;
-			
-		case "editar":
-			buscar(request, response);
-			break;
+			return;
+		}
 
-		default:
-			break;
+		if (accion.equals("lis")) {
+			listar(request, response);
+			return;
+		}
+
+		if (accion.equals("editar")) {
+			buscar(request, response);
+			return;
+		}
+		
+		if(accion.equals("mostrar")) {
+			mostrar(request, response);
+			return;
 		}
 	}
 
+	private void mostrar(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("id"));
+		
+		DAO_Factory factory = DAO_Factory.getDAO_Factory(1);
+		ListProd producto = factory.getProductoInterface().mostrar(id);
+		
+		req.setAttribute("producto", producto);
+		req.getRequestDispatcher("views/homeProducto.jsp").forward(req, res);;
+	}
+	
 	private void buscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cod = request.getParameter("codigo");
 		
@@ -77,6 +89,7 @@ public class CrudProductoServlet extends HttpServlet {
 		request.getRequestDispatcher("crudProducto.jsp").forward(request, response);
 		
 	}
+
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DAO_Factory fabrica = DAO_Factory.getDAO_Factory(DAO_Factory.MYSQL);

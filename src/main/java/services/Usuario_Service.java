@@ -11,6 +11,10 @@ public class Usuario_Service {
 
 	Usuario_DAO usuario = factory.getUsuario();
 	
+	public Usuario_DTO login(String email, String clave) {
+		return usuario.login(email, clave);
+	}
+	
 	public int agregar(Usuario_DTO newUsuario) {
 		return usuario.agregar(newUsuario);
 	}

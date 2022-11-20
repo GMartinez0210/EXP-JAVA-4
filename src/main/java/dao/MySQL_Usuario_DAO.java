@@ -98,7 +98,6 @@ public class MySQL_Usuario_DAO implements Usuario_DAO {
 
 	@Override
 	public Usuario_DTO buscar(int id) {
-	
 		Usuario_DTO usuario = new Usuario_DTO();
 		
 		Connection connection = null;
@@ -211,4 +210,48 @@ public class MySQL_Usuario_DAO implements Usuario_DAO {
 		return eliminar;
 	}
 
+	@Override
+	public Usuario_DTO login(String email, String clave) {
+		Usuario_DTO usuario = null;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet result = null;
+		
+		try {
+			connection = MySQLConexion.getConexion();
+			String query = "call USP_LoginUsuario(?,?);";
+			
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, clave);
+			
+			result = preparedStatement.executeQuery();
+			
+			if(result.next()) {
+				usuario = new Usuario_DTO();
+				usuario.setId(result.getInt("id"));
+				usuario.setTipo(result.getString("tipo"));
+				usuario.setEmail(result.getString("email"));
+				usuario.setClave(result.getString("clave"));
+				usuario.setDni(result.getString("dni"));
+				usuario.setNombre(result.getString("nombre"));
+				usuario.setApellidos(result.getString("apellidos"));
+			}
+		}
+		catch (Exception e) {
+			System.out.println(">>> ERROR en el query: " + e.getMessage());
+		}
+		finally {
+			try {
+				if(preparedStatement != null ) preparedStatement.close();
+				if(connection != null) connection.close();
+			} 
+			catch (SQLException e2) {
+				System.out.println(">>> ERROR en la BD: " + e2.getMessage());
+			}
+		}
+		
+		return usuario;
+	}
 }

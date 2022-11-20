@@ -14,3 +14,7 @@
 	font-weight: 400;
 	color: #000;
 }
+
+.btn-ingresar:hover .bi.bi-person {
+	color: #FFF;
+}

@@ -33,6 +33,12 @@
       	<li class="nav-item p-3">
       		<i class="bi bi-cart nav-link-icon"></i>
       	</li>
+      	<li class="nav-item p-3">
+      		<a href="${pageContext.request.contextPath}/views/usuarioLogin.jsp" class="nav-link btn btn-outline-dark btn-ingresar">
+      			<i class="bi bi-person nav-link-icon"></i>
+      			<span>Ingresar</span>
+      		</a>
+      	</li>
       </ul>
     </div>
   </div>

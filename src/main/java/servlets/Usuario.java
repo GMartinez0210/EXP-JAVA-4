@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.Usuario_DTO;
 import services.Usuario_Service;
@@ -48,6 +49,11 @@ public class Usuario extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String tipo = req.getParameter("tipo");
 		
+		if(tipo.equals("login")) {
+			login(req, res);
+			return;
+		}
+		
 		if(tipo.equals("agregar")) {
 			agregar(req, res);
 			return;
@@ -72,6 +78,29 @@ public class Usuario extends HttpServlet {
 			eliminar(req, res);
 			return;
 		}
+	}
+
+	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String email = req.getParameter("email");
+		String clave = req.getParameter("clave");
+		
+		
+		Usuario_DTO usuario = usuarioService.login(email, clave);
+		
+		if(usuario == null) {
+			res.sendRedirect("views/usuarioLogin.jsp");
+			return;
+		}
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("usuario", usuario);
+		
+		if(usuario.getIdTipo() != 1) {
+			res.sendRedirect("views/home.jsp");
+			return;
+		}
+		
+		res.sendRedirect("Usuario?tipo=listar");
 	}
 
 	private void agregar(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

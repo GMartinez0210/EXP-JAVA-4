@@ -200,4 +200,72 @@ public class MySQL_Producto_DAO implements Producto_Interface_DAO {
 		
 	}
 
+	@Override
+	public ArrayList<ListProd> listarCategoria(int idCategoria) {
+		ArrayList<ListProd> listado = new ArrayList<ListProd>();
+		
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try {
+			con = MySQLConexion.getConexion();
+			String sql = "call USP_ListarProducto_Home(?);";
+			
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, idCategoria);
+			
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				ListProd p = new ListProd();
+				p.setId_prod(rs.getInt(1));
+				p.setNombre(rs.getString(2));
+				p.setPrecio(rs.getDouble(3));
+				p.setStock(rs.getInt(4));
+				p.setCategoria(rs.getString(5));
+				p.setImagen(rs.getBinaryStream(6));
+				listado.add(p);
+			}
+						
+		} catch (Exception e) {
+			System.out.println("Error en listado: " + e.getMessage());
+		} finally {
+			MySQLConexion.closeConexion(con);
+		}
+		return listado;
+	}
+
+	@Override
+	public ListProd mostrar(int id) {
+		ListProd p = null;
+
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try {
+			con = MySQLConexion.getConexion();
+			String sql = "SELECT * FROM producto WHERE id = ?";
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				p.setId_prod(rs.getInt(1));
+				p.setNombre(rs.getString(2));
+				p.setPrecio(rs.getDouble(3));
+				p.setStock(rs.getInt(4));
+				p.setCategoria(rs.getString(5));
+				p.setImagen(rs.getBinaryStream(6));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error en buscar: " + e.getMessage());
+		} finally {
+			MySQLConexion.closeConexion(con);
+		}
+		return p;
+	}
+
 }

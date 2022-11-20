@@ -13,12 +13,12 @@
 	<!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 	<!-- Vanilla CSS -->
-	<link rel="stylesheet" href="css/index.css">
-	<link rel="stylesheet" href="css/nav.css">
-	<link rel="stylesheet" href="css/section.css">
-	<link rel="stylesheet" href="css/acordeon_detalleCompra.css">	
-	<link rel="stylesheet" href="css/footer.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/formLogin.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/nav.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/section.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/acordeon_detalleCompra.css">	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 	<title>GEALLU Store</title>
 </head>
 <body>
-<div class="container">

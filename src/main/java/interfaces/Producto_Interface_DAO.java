@@ -20,5 +20,7 @@ public interface Producto_Interface_DAO {
 	
 	public void listarImg(int id, HttpServletResponse response);
 	
-	
+	public ArrayList<ListProd> listarCategoria(int idCategoria);
+	public ListProd mostrar(int id);
+
 }

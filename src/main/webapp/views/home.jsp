@@ -1,24 +1,23 @@
-<jsp:include page="./partials/head.jsp" />
+<%@ page import="beans.Categoria_Tipo_DTO" %>
+<%@ page import="interfaces.Categoria_Tipo_DAO" %>
+<%@ page import="dao.DAO_Factory" %>
 
+
+<jsp:include page="./partials/head.jsp" />
 <jsp:include page="../components/nav.jsp" />
 
-<<<<<<< HEAD
 <main class="container">
 	<section>
-		<h2 class="section-title">Hombres</h2>
-		<jsp:include page="../components/slider.jsp" />
+		<% DAO_Factory factory = DAO_Factory.getDAO_Factory(1); %>
+        <% Categoria_Tipo_DAO categoriaProductos = factory.getCategoriaProducto(); %>
+        <% for(Categoria_Tipo_DTO categoriaProducto : categoriaProductos.listar()) {%>
+			<h2 class="section-title mt-5"> <%= categoriaProducto.getNombre() %> </h2>
+			<jsp:include page="../components/slider.jsp">
+				<jsp:param value="<%= categoriaProducto.getId() %>" name="idCategoria"/>
+			</jsp:include>
+        <% } %>
 	</section>
 </main>
 
 <jsp:include page="../components/footer.jsp" />
-
 <jsp:include page="./partials/foot.jsp" />
-=======
-
-<jsp:include page="../components/detalleCompra.jsp" />
-
-<jsp:include page="../components/footer.jsp" />
-
-
-<%@ include file="./partials/foot.jsp" %>
->>>>>>> b077a568972461cb8b31fda3ad6656de31bb73bb
